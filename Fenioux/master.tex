@@ -2,14 +2,14 @@
 
 
 % Pas besoin d'obfusquer les adresses mails, \email s'en chargera (XXX)
-\setauthor[M.~MonNom, A.~MonAutreNom]{MonPrenom MonNom \and AutrePrenom AutreNom\\
-  \email{monprenom.monnom@mycorp.com\\autreprenom.autrenom@mycorp.com}}
+\setauthor[M.~Fenioux, A.~MonAutreNom]{Arnaud Fenioux \and AutrePrenom AutreNom\\
+  \email{afenioux@franceix.net\\autreprenom.autrenom@mycorp.com}}
 
 % XXX: Gérer le cas des compagnies multiples
-\institute{MyCorp}
+\institute{FranceIX}
 
 \maketitle
-\index{MonNom, M.}
+\index{Fenioux, M.}
 \index{MonAutreNom, A.}
 
 \begin{abstract}
@@ -94,9 +94,9 @@ deserunt mollit anim id est laborum.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.4\textwidth]{MonNom/img/archi}
+  \includegraphics[width=0.4\textwidth]{Fenioux/img/archi}
   \caption{Légende de l'image}
-  \label{fig:monnom:archi}
+  \label{fig:fenioux:archi}
 \end{figure}
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -134,11 +134,11 @@ mollit anim id est laborum.
 %% 
 
 Je sais aussi faire des citations, dans l'article de Charlie
-Lembrouille, \cite{monnom:charlielembrouille}, il est démontré que, je cite,
+Lembrouille, \cite{fenioux:charlielembrouille}, il est démontré que, je cite,
 \og{}les trotinettes sont vulnérables aux attaques par XSS\fg{}. C'est
-moche, l'image~\ref{fig:monnom:archi} en étant la preuve !
+moche, l'image~\ref{fig:fenioux:archi} en étant la preuve !
 
-Si une citation est manquante (comme \cite{monnom:referencefoireuse}),
+Si une citation est manquante (comme \cite{fenioux:referencefoireuse}),
 un warning en rouge s'affichera lors de la compilation.
 
 Avec des listes partout :
@@ -190,14 +190,14 @@ mollit anim id est laborum.
 %% 
 
 Des fois, je peux aussi inclure du texte brut, comme la sortie
-standard en figure~\ref{lst:monnom:outhello} qui a été généré par le
-code~\ref{lst:monnom:helloword}.
+standard en figure~\ref{lst:fenioux:outhello} qui a été généré par le
+code~\ref{lst:fenioux:helloword}.
 
-\begin{lstlisting}[language={},caption={Sortie standard},label={lst:monnom:outhello}]
+\begin{lstlisting}[language={},caption={Sortie standard},label={lst:fenioux:outhello}]
 Hello world everybody
 \end{lstlisting}
 
-\begin{lstlisting}[language={Python},caption={Mon premier code},label={lst:monnom:helloword}]
+\begin{lstlisting}[language={Python},caption={Mon premier code},label={lst:fenioux:helloword}]
 #! /usr/bin/env python
 
 import sys
@@ -209,7 +209,7 @@ if __name__ == '__main__':
     hello(sys.argv[1] if len(sys.argv) > 1 else 'everybody')
 \end{lstlisting}
 
-\bibliography{MonNom/biblio}
+\bibliography{Fenioux/biblio}
 
 %%% Local Variables:
 %%% mode: TeX-PDF
