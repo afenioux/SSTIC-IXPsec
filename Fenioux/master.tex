@@ -1,25 +1,20 @@
-\settitle[Sécurité des trotinettes]{Sécurité des trotinettes : prise de contrôle des roues à distance}
+\settitle[Sécurité des Points d'échanges]{Sécurité des Points d'échanges : BGP et BCP}
 
 
 % Pas besoin d'obfusquer les adresses mails, \email s'en chargera (XXX)
-\setauthor[M.~Fenioux, A.~MonAutreNom]{Arnaud Fenioux \and AutrePrenom AutreNom\\
-  \email{afenioux@franceix.net\\autreprenom.autrenom@mycorp.com}}
+\setauthor[M.~Fenioux, ~M. van Gulik]{Arnaud Fenioux \and Will van Gulik\\
+  \email{afenioux@franceix.net\\will.van.gulik@ip-max.net}}
 
 % XXX: Gérer le cas des compagnies multiples
-\institute{FranceIX}
+\institute{FranceIX / IP-Max}
 
 \maketitle
-\index{Fenioux, M.}
-\index{MonAutreNom, A.}
+\index{Fenioux, A.}
+\index{van Gulik, W.}
 
 \begin{abstract}
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-  minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-  aliquip ex ea commodo consequat. Duis aute irure dolor in
-  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-  culpa qui officia deserunt mollit anim id est laborum.
+ Les opéateurs Internet utilisent le protocole BGP afin d'éhanger leurs informations de routage. Bien qu'étant ancien et n'utilisant pas de mécanisme de sécurité fort, ce protocole a su évoluer et de nombreuses recommandations BCP (Best Common Practices) et RFC ont été rédigées.
+ Cette soumission a pour but d'expliquer les risques les plus souvent rencontrés sur les points d'échanges, ainsi que de présenter les solutions existantes. Cette approche sera composée d'un volet théorique et pratique (sous forme de retours d'éxpériences) afin appréhender les problématiques de sécurité rencontrées par les opérateurs se raccordant a un IXP.
 \end{abstract}
 
 %% Découpage en sections
