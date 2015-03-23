@@ -126,6 +126,16 @@ Tous ces mécanismes de protection sont expliqués dans la BCP IETF \emph{BGP op
 \item réannonce d'un préfixe plus spécifique d'un IXP -> DROP des sessions -> exemple de l'AMS-IX!
 \end{itemize}
 
+
+\section{Conclusion}
+
+Cet article a permis de dresser une liste non exaustive des risques rencontrés par un opérateur se raccordant à un point d'échange ainsi que de montrer les contre-mesures existantes.
+Nous avons pu constater que même si une bonne configuration BGP de ses équipements permet de se prémunir des attaques les plus communes, il est aussi important d'activer des mécanismes de filtrages et de protection non directement relatifs à BGP.
+
+Bien que ces mécanimes soient définis publiquement, implémentés et documentés depuis de nombreuses années, il est a noter qu'encore trop peu d'administrateurs réseaux les mettent en place. Cela peut etre expliqué par le manque de temps, la non connnaissance de ces risques et moyen de s'en protéger, ou que ces risques sont trop souvents considérés comme mineurs.
+
+\bibliography{Fenioux/biblio}
+
 %% Images, figures
 %% ===============
 %% 
@@ -223,15 +233,6 @@ Tous ces mécanismes de protection sont expliqués dans la BCP IETF \emph{BGP op
 %% Hello world everybody
 %% end{lstlisting}
 
-
-\section{Conclusion}
-
-Cet article a permis de dresser une liste non exaustive des risques rencontrés par un opérateur se raccordant à un point d'échange ainsi que de montrer les contre-mesures existantes.
-Nous avons pu constater que même si une bonne configuration de BGP ses équipements permet de se prémunir des attaques les plus communes, il est aussi important d'activer des mécanismes de filtrages et de protection non directement relatifs à BGP.
-
-Bien que ces mécanimes soient définis publiquement, implémentés et documentés depuis de nombreuses années, il est a noter qu'encore trop peu d'administrateurs réseaux les mettent en place. Cela peut etre expliqué par le manque de temps, la non connnaissance de ces risques et moyen de s'en protéger, ou que ces risques sont trop souvents considérés comme mineurs.
-
-\bibliography{Fenioux/biblio}
 
 %%% Local Variables:
 %%% mode: TeX-PDF
