@@ -5,9 +5,7 @@
 %% ===========
 %% 
 %% Pour compiler les sources, c'est aussi simple que :
-%%     $ make
-%% 
-%% Le résultat est dans sstic-actes.pdf
+%%     $ make sstic-actes.html
 %% 
 %% Ce modèle doit être la base commune à tous les articles LaTeX pour
 %% SSTIC.
@@ -26,8 +24,10 @@
 %% modules entre eux.
 %% 
 
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
 \usepackage[french]{babel}
-\usepackage[utf8x]{inputenc}
 \usepackage[fit]{truncate}
 \usepackage{xspace}
 \usepackage[table]{xcolor}
@@ -38,7 +38,7 @@
 \usepackage{ifthen}
 \usepackage{url}
 
-\usepackage{ean13isbn}
+\DeclareUnicodeCharacter{00A0}{~}
 
 % Hack to have agenda working
 \newcommand{\pause}[1]{\emph{#1}}
@@ -50,11 +50,12 @@
 \usetikzlibrary{patterns}
 \usetikzlibrary{shapes}
 
+% htlatex uses latex in dvi mode so force the extension to something (either png or eps)
+\DeclareGraphicsExtensions{.eps, .png}
 
 \usepackage{makeidx}
 \makeindex
 
-\usepackage[T1]{fontenc}
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{multirow}
@@ -63,17 +64,14 @@
 \usepackage{subfigure}
 
 \usepackage{etoolbox}
-\usepackage[fancy]{tikz-inet}
 \usetikzlibrary{shapes,backgrounds}
 
 \usetikzlibrary{trees}
 
 \usepackage{microtype}     % Needs the cm-super Debian package
-\usepackage{lmodern}
 
 \usepackage{verbatim}
 \usepackage{amsmath}
-\usepackage{amssymb}
 \usepackage{pifont}
 \usepackage{pmboxdraw}
 \usepackage{fancyvrb}
@@ -134,37 +132,19 @@
   {\renewcommand{\theshortauthor}{#1}\tocauthor{#1}\authorrunning{#1}}%
 }
 
-\pagestyle{fancy}
-\fancyhf{}
-\setlength{\headheight}{16pt}
-\fancyhead[LE,RO]{\thepage}
-\fancyhead[RE]{\truncate{.90\headwidth}{\theshorttitle}}
-\fancyhead[LO]{\theshortauthor}
-
 \newcommand{\myclearpage}{\newpage{\pagestyle{empty}\cleardoublepage}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \bibliographystyle{plain}
 
-\sloppy
 
 \begin{document}
 
-\pagestyle{empty}
-\frontmatter
-
-\input{_frontmatter/master}
-
 \tableofcontents
-\mainmatter
-\pagestyle{fancy}
 
+\input{article/master}
 
-\renewcommand{\thelstlisting}{\arabic{lstlisting}}
-\input{_mainmatter/master}
-
-\input{_backmatter/master}
 \end{document}
 
 %% Publication
