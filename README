@@ -4,13 +4,11 @@
 Introduction
 ===========
 
-Cet article est un draft ayant pour vocation d'etre proposé au comité du SSTIC
-en vue d'etre présenté durant le SSTIC 2016.
+Cet article est un draft ayant pour vocation d'etre proposé au comité du SSTIC, en vue d'etre présenté durant le SSTIC 2016.
 
-Le sujet abordé est la sécurisation des échanges et des acteurs racordés sur un point d'échange internet (IXP).
-De nombreux articles ont été rédigés sur la sécurité de BGP, il s'agit ici de présenter des risques 
-et solution afférant à des problématiques de sécurité de niveau 2, principalement rencontré sur les IXP.
-
+ Les opéateurs Internet utilisent le protocole BGP (Border Gateway Protocol) afin d'échanger leurs informations de routage. Bien qu'étant ancien et n'utilisant pas de mécanisme de sécurité fort, ce protocole a su évoluer et de nombreuses recommandations BCP (Best Current Practices) et RFC ont été rédigées.
+ Cette soumission a pour but d'expliquer les risques les plus souvent rencontrés sur les points d'échanges (IXP), ainsi que de présenter les solutions existantes afin de s'en prémunir. 
+ De nombreux articles ont été rédigés sur la sécurité de BGP, il s'agit ici de présenter aussi les risques et solutions concernant des problématiques de sécurité de niveau 2.
 
 Utilisation
 ===========
