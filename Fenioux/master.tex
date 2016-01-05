@@ -111,12 +111,12 @@ BGP ne possède pas de mécanisme permettant de vérifier la validité des AS tr
 
 \paragraph{NOTE}
 \begin{itemize}
-\item Avec 1 seul Transit, et pas de peer, pas réellement besoin de filtrage, mais attention danger pour la suite (si + de tranit ou ajout peers).
+\item Avec 1 seul Transit, et pas de peering, pas réellement besoin de filtrage, mais attention danger pour la suite (si + de tranit ou ajout peers).
 \item Max-prefix
-\item Filtrage AS\_PATH (vide et seulement CUSTen OUT) / longeur en IN
+\item Filtrage AS\_PATH (vide et seulement AS des CUST en OUT) / longeur en IN
 \item Prefix List IN  : Bogon, Trop spécifiques, PFL par peer (liste des réseaux via contrat ou par mail?)
 \item Filter ses interco! si annonce plus spécifique -> Boum! exemple AMS-IX lors de la renumérotation
-\item Prefix List OUT : OF cours, comme pour transit, sinon Leak
+\item Prefix List OUT : comme pour transit, sinon Leak
 \item expliquer les impactes d'un leak :  (Indosat / Level3) -> Free
 \item Donner des exemples comme le vol de bitcoin pour montrer la différence d'un hijack avec un leak
 \url{http://www.reddit.com/r/Bitcoin/comments/27vb4r/the_ghashio_cycle/}
@@ -129,7 +129,7 @@ Tous ces mécanismes de protection sont expliqués dans la BCP 194 \emph{BGP ope
 
 \paragraph{}
 Il est important pour un ISP de se protéger correctement et d'appliquer des filtrages stricts lorsqu'il se raccorde à un point d'échange.
-Car lorsqu'il était raccordé à un transitaire, il pouvait se reposer sur la confiance qu'il avaient en son fournisseur, mais sur un IXP, c'est comme arrivé dans le cours des grands, si vous ne faites pas attention, personne ne le fera pour vous.
+Car lorsqu'il était raccordé à un transitaire, il pouvait se reposer sur la confiance qu'il avaient en son fournisseur, mais sur un IXP, c'est comme arriver dans le cours des grands, si vous ne faites pas attention, personne ne le fera pour vous.
 
 \section{Risques et contre-mesures du point de vue d'un IXP}
 
@@ -156,7 +156,6 @@ Une autre solution consiste à vérifier que l'AS d'origine est autorisé à êt
 \item Filtrage addr MAC via L2 ACL pour éviter boucle et empécher MAC spoofing (MITM L2)
 \item Router Advertisment en IPv6 acticé par défaut = annonce d'une default route -> blackhole de trafic possible (d'ou l'utilité du VLAN de quarantaine et du filtrages de types de paquets sur les IXP)
 \item IP Spoofing D.A.I / IPv6 FHS (Filtrage ARP Reply : couple SHA/SPA différent de IP/MAC si attaque)
-\item 
 \item multicast a filtrer : possibilité de faire monter 100\% le CPU des routeurs (MLD Snooping, mais attention TCAM)
 \item Broadcast a filtrer : pas besoin, juste de l'ARP
 \item Unknown unicast a rate-limiter -> CPU ou petit port full sinon (expliquer le terme BUM)
