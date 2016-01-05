@@ -74,7 +74,7 @@ Une fois connecté à un point d'échange chaque opérateur peut choisir de peer
 
 \section{Risques et contre-mesures du point de vue d'un ISP}
 
-\subsection{Problématique de niveau 2 : Static Routing}
+\subsection{Problématique de Static Routing + redirect}
 Un problème à envisager lorsque l'on est connecté sur un IXP est l’utilisation possible par certains de routes statiques. 
 
 \paragraph{NOTE}
@@ -99,10 +99,11 @@ Tous ces mécanismes de protection sont expliqués dans la \emph{BCP84} \cite{fe
 \item ACL de niveau 3 (filtrage IP) 
 \item uRPF (+ RFC)
 \item Schéma
+\item Ne pas accepter les ICMP(6) redirect ni le RA! -> MITM (rédiger une sub-section pour ca)
 \end{itemize}
 
 
-\subsection{Problématique de niveau 3 : BGP}
+\subsection{Problématiques BGP}
 
 Un des incidents le plus fréquemment vu sur Internet est le leak de routes et l'usurpation de préfixes (annonces non autorisées). Cela est généralement dû à une erreur de configuration et est corrigé dans les heures qui suivent, mais il arrive que cela soit fait dans un but précis : soit pour annoncer des plages IP non utilisées afin d'envoyer du spam, soit pour détourner du trafic afin de l'analyser ou d'en tirer un bénéfice pécunaire.
 
@@ -121,7 +122,6 @@ BGP ne possède pas de mécanisme permettant de vérifier la validité des AS tr
 \item Donner des exemples comme le vol de bitcoin pour montrer la différence d'un hijack avec un leak
 \url{http://www.reddit.com/r/Bitcoin/comments/27vb4r/the_ghashio_cycle/}
 \url{http://research.dyn.com/2008/02/pakistan-hijacks-youtube-1/}
-\item Ne pas accepter les ICMP(6) redirect ni le RA! -> MITM
 \end{itemize}
 
 \paragraph{}
@@ -142,7 +142,7 @@ Une solutions communément utilisée est de filtrer les routes recues de la part
 \begin{itemize}
 \item Définir IRR DB
 \item Insiter sur bgpq3 (rapidité, facilité des config)
-\item Pointer IRR Explorer et parler rapidement de la qualité des différentes IRR
+\item Pointer IRR Explorer et parler rapidement de la qualité des merges des IRR (RAdb)
 \end{itemize}
 
 \paragraph{}
