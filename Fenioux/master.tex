@@ -14,7 +14,7 @@
 
 \begin{abstract}
  Les opéateurs Internet utilisent le protocole BGP (Border Gateway Protocol) afin d'échanger leurs informations de routage. Bien qu'étant ancien et n'utilisant pas de mécanisme de sécurité fort, ce protocole a su évoluer et de nombreuses recommandations BCP (Best Current Practices) et RFC ont été rédigées.
- Cette soumission a pour but d'expliquer les risques les plus souvent rencontrés sur les points d'échanges (IXP), ainsi que de présenter les solutions existantes afin de s'en prémunir. 
+ Cet article a pour but d'expliquer les risques les plus souvent rencontrés sur les points d'échanges (IXP), ainsi que de présenter les solutions existantes afin de s'en prémunir. 
  De nombreux articles ont été rédigés sur la sécurité de BGP, il s'agit ici de présenter aussi les risques et solutions concernant des problématiques de sécurité de niveau 2.
 \end{abstract}
 
@@ -33,10 +33,10 @@
 
 Afin de comprendre les termes et concepts utilisés par la suite, il est conseillé de lire l'article \emph{Influence des bonnes pratiques sur les incidents BGP} \cite{fenioux:SSTIC2012} présenté au SSTIC en 2012. Nous présenterons tout de meme brièvement le protocole BGP et les Points d'échanges dans cette introduction.
 
-\subsection{Internet et BGP}
+\subsection{Internet}
 
 \paragraph{}
-Chaque opérateur (aussi appelé ISP) désirant se connecter à Internet dispose d'un numéro d'AS (\emph{Autonomous System Number}) unique, ainsi que de plages d'adresses IP attribuées par un RIR (\emph{Regional Internet Registry}). Le RIPE est chargé de gérer l'attribution de ces ressources pour l'Europe.
+Chaque opérateur (aussi appelé ISP) désirant se connecter à Internet doit disposer d'un numéro d'AS (\emph{Autonomous System Number}) unique, ainsi que de plages d'adresses IP attribuées par un RIR (\emph{Regional Internet Registry}). Le RIPE est chargé de gérer l'attribution de ces ressources pour l'Europe.
 
 \paragraph{}
 Pour échanger ces informations de routage entre eux, les opérateurs utilisent le protocole BGP (\emph{Border Gateway Protocol}), chaque annonce BGP sera donc définie par au moins : un préfixe (numéro de réseau), un AS-PATH (liste des AS traversés pour arriver jusqu'à la destination) et un NEXT-HOP (adresse IP du routeur le plus proche pour acheminer le trafic vers la destination). Ces attributs sont définis en tant que \emph{Well-Known, Mandatory}, c'est à dire que tous les routeurs doivent les comprendre, tel que décrit dans la \emph{RFC4271} \cite{fenioux:BGP4}.
@@ -44,11 +44,11 @@ Pour échanger ces informations de routage entre eux, les opérateurs utilisent 
 \subsection{Types d'interconnexion}
 
 \paragraph{}
-On parlera de \emph{Transit} lorsqu'un opérateur paye un intermédiaire pour acheminer le trafic jusqu'à la destination.
-Et à contratio, de \emph{Peering} lorsque deux opérateurs sont directement interconnectés entre eux pour échanger leur trafic respectif. Le peering est généralement un accord gratuit, alors que le transit est payant.
+On parlera de \emph{Transit} lorsqu'un opérateur paye un intermédiaire pour acheminer le trafic jusqu'à la destination,
+et à contratio, de \emph{Peering} lorsque deux opérateurs sont directement interconnectés entre eux pour échanger leur trafic respectif. Le peering est généralement un accord gratuit, alors que le transit est payant.
 
 \paragraph{}
-Les opérateurs souhaitant échanger du trafic entre eux (on dit qu'ils \emph{peerent}) doivent être directement interconnectés, soit par l'utilisation d'un cable réseau entre leurs routeurs, soit par l'intermédiaire d'un point d'échange (aussi appelé IXP).
+Les opérateurs souhaitant échanger du trafic entre eux (on dit qu'ils \emph{peerent}) doivent être interconnectés dans le même LAN, soit par l'utilisation d'un cable réseau entre leurs routeurs, soit par l'intermédiaire d'un point d'échange (aussi appelé IXP).
 
 Les interconnexions directes (PNI \emph{Private Network Interconnections}) ne sont généralement utilisées que lorsqu'il y a besoin d'échanger beaucoup de trafic. En effet, au niveau opérationnel, cela nécessiste de dédier un port sur le routeur et de maintenir une liaison par voisin (aussi appelé \emph{peer}).
 
@@ -72,19 +72,16 @@ Une fois connecté à un point d'échange chaque opérateur peut choisir de peer
 \item Ecosysteme : Euro-IX (nombre d'IXP / Traff)
 \end{itemize}
 
-\section{Risques et contre-mesures du point de vue d'un ISP}
+\section{Du point de vue d'un opérateur raccordé sur un IXP}
 
 \subsection{Problématique de Static Routing + redirect}
 Un problème à envisager lorsque l'on est connecté sur un IXP est l’utilisation possible par certains de routes statiques. 
 
-\paragraph{NOTE}
-\begin{itemize}
-\item EXPLIQUER ROUTE STATIQUE
-\item EXPLIQUER ROUTE par défaut
-\end{itemize}
+Une route statique est une indication de routage qui est configurée manuellement sur le routeur et qui est prioritaire par rapport aux routes de même destination et même masque de sous réseau apprises via d'autres protocoles.
+Une route par défaut à pour destination 0.0.0.0 avec un mask de 0.0.0.0, le netmask étant moins spécifique que n'importe quelle autre route, même si la route par défaut est configurée de manière statique elle sera toujours considérée en dernier. Les routes par défaut sont généralement utilisées par les réseaux n'ayant qu'un seul opérateur (et donc pas d'alternative pour accéder au reste d'internet).
 
 \paragraph{}
-Si le routeur de l'opérateur cible contient toute les routes de l'Internet (full-table) et n'est pas correctement sécurisé, il est possible de faire pointer une route par défaut vers ce routeur afin d’utiliser ses transitaires et obtenir un accès complet et gratuit à Internet pour envoyer son trafic. Cette technique relativement grossière est d'autant plus visible et risquée, et peut être facilement déjouée par la victime via l'utilisation de VRF (\emph{Virtual Routing and Forwarding}), d'une prefix-list qui n'accepte que le trafic à destination de son propre réseau ou en s'assurant que le routeur connecté au point d'échange ne possède qu'un nombre limité de routes dans sa table de routage. Mais ces protections ne sont pas efficaces dans tous les cas.
+Si le routeur de l'opérateur cible contient toute les routes de l'Internet (full-table) ou une route par défaut et n'est pas correctement sécurisé, il est possible de faire pointer une route par défaut vers ce routeur afin d’utiliser ses transitaires et obtenir un accès complet et gratuit à Internet pour envoyer son trafic. Cette technique relativement grossière est d'autant plus visible et risquée, et peut être facilement déjouée par la victime via l'utilisation de VRF (\emph{Virtual Routing and Forwarding}), d'une prefix-list qui n'accepte que le trafic à destination de son propre réseau ou en s'assurant que le routeur connecté au point d'échange ne possède qu'un nombre limité de routes dans sa table de routage. Mais ces protections ne sont pas efficaces dans tous les cas.
 
 \paragraph{}
 En effet, un peer s'étant vu refuser une demande de peering peut aisément définir une route statique vers le routeur de cet opérateur afin de forcer tout le trafic lui étant destiné à aller directement chez lui. Cette technique peut être détectée par une analyse des volumes de trafic par AS (et/ou par préfixe) source. Ces statistiques peuvent être collectées par NetFlow, Sflow ou IPFIX si le routeur supporte ces protocoles. L'attanquant perd alors une partie de la résiliance, car si la victime met en place un filtrage (uRPF \emph{Unicast Reverse Path Forwarding} strict ou feasible path, ou une ACL \emph{Access Control List} interdisant le trafic provenant de l'adresse MAC du routeur de l'attanquant) le trafic sera alors détruit (blackholé).
@@ -95,6 +92,7 @@ Tous ces mécanismes de protection sont expliqués dans la \emph{BCP84} \cite{fe
 
 \paragraph{NOTE}
 \begin{itemize}
+\item Filtrage dans le data-plane : 
 \item Détailer l'utilisation des ACL de niveau 2 (filtrage MAC)
 \item ACL de niveau 3 (filtrage IP) 
 \item uRPF (+ RFC)
@@ -113,6 +111,7 @@ BGP ne possède pas de mécanisme permettant de vérifier la validité des AS tr
 \paragraph{NOTE}
 \begin{itemize}
 \item Avec 1 seul Transit, et pas de peering, pas réellement besoin de filtrage, mais attention danger pour la suite (si + de tranit ou ajout peers).
+\item Filtrage dans le control-plane : 
 \item Max-prefix
 \item Filtrage AS\_PATH (vide et seulement AS des CUST en OUT) / longeur en IN
 \item Prefix List IN  : Bogon, Trop spécifiques, PFL par peer (liste des réseaux via contrat ou par mail?)
@@ -131,7 +130,9 @@ Tous ces mécanismes de protection sont expliqués dans la BCP 194 \emph{BGP ope
 Il est important pour un ISP de se protéger correctement et d'appliquer des filtrages stricts lorsqu'il se raccorde à un point d'échange.
 Car lorsqu'il était raccordé à un transitaire, il pouvait se reposer sur la confiance qu'il avaient en son fournisseur, mais sur un IXP, c'est comme arriver dans le cours des grands, si vous ne faites pas attention, personne ne le fera pour vous.
 
-\section{Risques et contre-mesures du point de vue d'un IXP}
+\section{Du point de vue d'un IXP}
+
+Les Route Servers sont un des principaux services proposé et géré par les points d'échange, ils permettent de redistribuer, entre les membres, les routes apprises via BGP. Chaque membre souhaitant utiliser ce service doit établir une session BGP avec les Route Servers afin d'apprendre les routes annoncées par les autres membres connectés, cela évite un grand nombre de configuration entre les membres.
 
 \subsection{Route Servers}
 
@@ -149,7 +150,7 @@ Une solutions communément utilisée est de filtrer les routes recues de la part
 Une autre solution consiste à vérifier que l'AS d'origine est autorisé à être la source de ces annonces, ce qui peut etre mis en place a l'aide de RPKI (\emph{Resource Public Key Infrastructure}) / ROA (\emph{Route Origin Authorization}) \cite{fenioux:RPKIROA}. Cette technique n'est encore que peu adoptée par la communauté des opérateurs car elle est encore récente.
 
 
-\subsection{Protections sur ports d'acces à l'IXP}
+\subsection{Protections sur le port faisant face à l'utilisateur d'un IXP}
 
 \paragraph{NOTE}
 \begin{itemize}
