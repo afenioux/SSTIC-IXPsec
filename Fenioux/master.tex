@@ -2,15 +2,17 @@
 
 
 % Pas besoin d'obfusquer les adresses mails, \email s'en chargera (XXX)
-\setauthor[A.~Fenioux, ~W. van Gulik]{Arnaud Fenioux \and Will van Gulik\\
-  \email{afenioux@franceix.net\\will.van.gulik@ip-max.net}}
+\setauthor[A.~Fenioux, A.~Corso, ~W. van Gulik]{Arnaud Fenioux, Alexandre Corso \and Will van Gulik\\
+  \email{afenioux@franceix.net\\acorso@franceix.net\\will.van.gulik@ip-max.net}}
 
 % XXX: Gérer le cas des compagnies multiples
 \institute{FranceIX / IP-Max}
 
 \maketitle
 \index{Fenioux, A.}
+\index{Corso, A.}
 \index{van Gulik, W.}
+
 
 \begin{abstract}
  Les opéateurs Internet utilisent le protocole BGP (Border Gateway Protocol) afin d'échanger leurs informations de routage. Bien qu'étant ancien et n'utilisant pas de mécanisme de sécurité fort, ce protocole a su évoluer et de nombreuses recommandations BCP (Best Current Practices) et RFC ont été rédigées.
@@ -75,9 +77,11 @@ Une fois connecté à un point d'échange chaque opérateur peut choisir de peer
 \section{Du point de vue d'un opérateur raccordé sur un IXP}
 
 \subsection{Problématique de Static Routing + redirect}
+\paragraph{}
 Un problème à envisager lorsque l'on est connecté sur un IXP est l’utilisation possible par certains de routes statiques. 
 
 Une route statique est une indication de routage qui est configurée manuellement sur le routeur et qui est prioritaire par rapport aux routes de même destination et même masque de sous réseau apprises via d'autres protocoles.
+
 Une route par défaut à pour destination 0.0.0.0 avec un mask de 0.0.0.0, le netmask étant moins spécifique que n'importe quelle autre route, même si la route par défaut est configurée de manière statique elle sera toujours considérée en dernier. Les routes par défaut sont généralement utilisées par les réseaux n'ayant qu'un seul opérateur (et donc pas d'alternative pour accéder au reste d'internet).
 
 \paragraph{}
@@ -172,6 +176,9 @@ Cet article a permis de dresser une liste non exaustive des risques rencontrés 
 Nous avons pu constater que même si une bonne configuration BGP de ses équipements permet de se prémunir des attaques les plus communes, il est aussi important d'activer des mécanismes de filtrages et de protection non directement relatifs à BGP.
 
 Bien que ces mécanimes soient définis publiquement, implémentés et documentés depuis de nombreuses années, il est à noter qu'encore trop peu d'administrateurs réseaux les mettent en place. Cela peut etre expliqué par le manque de temps, la non connnaissance de ces risques et moyen de s'en protéger, ou que ces risques sont trop souvents considérés comme mineurs.
+
+\section{Remerciements}
+Nous tenons à remercier Guillaume Valadon pour ses suggestions, ses relectures et son soutiens tout au long de l'écriture de cet article.
 
 \bibliography{Fenioux/biblio}
 
